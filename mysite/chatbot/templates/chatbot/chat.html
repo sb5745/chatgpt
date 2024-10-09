@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat with GPT-4-turbo</title>
+    <style>
+        /* 화면을 좌우로 나누기 위한 CSS */
+        .container {
+            display: flex;
+        }
+
+        .left-panel {
+            width: 20%;
+            padding: 10px;
+            border-right: 1px solid #ccc;
+            height: 100vh;
+        }
+
+        .right-panel {
+            width: 80%;
+            padding: 10px;
+        }
+
+        .room-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .room-list li {
+            padding: 5px;
+            border-bottom: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .room-list li:hover {
+            background-color: #f0f0f0;
+        }
+
+        .room-list li.active {
+            background-color: #d0d0d0;
+        }
+        
+        #conversation {
+            max-height: 500px; /* 대화 기록 창의 최대 높이 */
+            overflow-y: auto;  /* 스크롤바 활성화 */
+        }
+</style>
+
+    </style>
+</head>
+<body>
+
+    <h1>Chat with GPT-4-turbo</h1>
+
+    <!-- 전체 컨테이너 시작 -->
+    <div class="container">
+        <!-- 왼쪽 패널: 대화방 리스트 -->
+        <div class="left-panel">
+            <h3>대화방 목록</h3>
+            <ul class="room-list">
+                {% for room in rooms %}
+                    <li {% if selected_room and room.id == selected_room.id %}class="active"{% endif %} onclick="window.location.href='?room_id={{ room.id }}'">
+                        {{ room.title }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- 오른쪽 패널: 질문 입력 및 대화 내용 -->
+        <div class="right-panel">
+            <form method="POST">
+                {% csrf_token %}
+                <select name="model">
+                    <option value="gpt-4-turbo" {% if default_model == 'gpt-4-turbo' %}selected{% endif %}>GPT-4 Turbo (기본값)</option>
+                    <option value="gpt-4" {% if default_model == 'gpt-4' %}selected{% endif %}>GPT-4</option>
+                    <option value="gpt-4-32k" {% if default_model == 'gpt-4-32k' %}selected{% endif %}>GPT-4-32k</option>
+                    <option value="gpt-3.5-turbo" {% if default_model == 'gpt-3.5-turbo' %}selected{% endif %}>GPT-3.5 Turbo</option>
+                </select>
+
+                <br><br>
+
+                <textarea name="user_message" rows="5" cols="60" placeholder="질문을 입력하세요"></textarea><br>
+                <button type="submit">질문하기</button>
+
+                <!-- 숨겨진 필드로 선택된 대화방 정보 보내기 -->
+                <input type="hidden" name="room_id" value="{{ selected_room.id }}">
+            </form>
+
+            <br>
+
+            <!-- 총 대화 개수 출력 -->
+            <p>총 대화 개수: {{ conversations|length }}</p>
+
+            <!-- 대화 기록 -->
+            {% if conversations %}
+                <h2>대화 기록: {{ selected_room.title }}</h2>
+                <div id="conversation">
+                    {% for message in conversations %}
+                        <p><strong>{{ message.role }}:</strong> {{ message.content }}</p>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>대화를 선택해 주세요.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            var conversationDiv = document.getElementById("conversation");
+            conversationDiv.scrollTop = conversationDiv.scrollHeight;  // 스크롤을 맨 아래로
+        }
+    </script>
+   
+</body>
+
+</html>

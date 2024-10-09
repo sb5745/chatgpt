@@ -1,0 +1,10 @@
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Django form 필드들을 출력 -->
+    
+    <!-- 파일 업로드 필드 -->
+    <label for="attached_file">파일첨부:</label>
+    <input type="file" name="attached_file" id="attached_file">
+    
+    <button type="submit">Create Room</button>
+</form>
