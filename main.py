@@ -2,7 +2,7 @@ from openai import OpenAI
 from mysite.config import OPENAI_API_KEY, DEFAULT_MODEL
 
 client = OpenAI(api_key=OPENAI_API_KEY)
-    #api_key ='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',
+   
     #openai.api_key = OPENAI_API_KEY
 
 
