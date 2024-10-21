@@ -24,6 +24,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('chatbot.urls')),  # chatbot 앱의 URL을 포함시킵니다.
     path('chat/', include('chatbot.urls')), # 'chat/' 경로가 chatbot의 urls.py로 연결됨
     path('', lambda request: redirect('chat/')),
 

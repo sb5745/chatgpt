@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Topic</title>
+</head>
+<body>
+    <h1>대화 주제 만들기</h1>
+    <form method="post" enctype="multipart/form-data">  <!-- 파일 업로드를 위한 enctype 추가 -->
+        {% csrf_token %}
+    
+        <!-- 대화 주제 제목 -->
+        <label for="title">대화 주제 제목:</label>
+        <input type="text" id="title" name="title" required><br><br>
+    
+        <!-- 대화 주제 설명 -->
+        <label for="description">설명:</label>
+        <textarea id="description" name="description" required></textarea><br><br>
+    
+        <!-- 첨부파일 -->
+        <label for="attached_file">파일 첨부:</label>
+        <!--input type="file" id="attached_file" name="attached_file" multiple><br><br-->
+        <input type="file" id="attached_file"  multiple><br><br>
+        <!-- 리스트에 추가 버튼 -->
+        <button type="button" id="add_to_list_button" name="add_to_list_button">리스트에 추가</button><br><br>
+
+        <!-- 파일 리스트를 화면에 표시할 곳 -->
+        <h3>첨부된 파일리스트</h3>
+        <ul id="file-list"></ul>
+
+    
+        <!-- 주제 생성 버튼 -->
+        <!--button type="submit">주제 생성</button-->
+        <button type="submit" id="submit_button" name="submit_button">주제 생성</button>
+
+    </form>
+
+    <!-- chat.js 파일을 포함 -->
+<script src="{% static 'js/chat.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\mysite",
+    "\\mysite\\chatbot",
+    "\\mysite\\chatbot\\static",
+    "\\mysite\\chatbot\\static\\js",
+    "\\mysite\\chatbot\\templates",
+    "\\mysite\\chatbot\\templates\\chatbot"
+  ],
+  "SelectedNode": "\\mysite\\chatbot\\views.py",
+  "PreviewInSolutionExplorer": false
+}

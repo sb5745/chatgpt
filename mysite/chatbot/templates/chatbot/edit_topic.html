@@ -1,0 +1,36 @@
+<h2>대화 주제 정보 수정</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <label for="title">대화 주제명:</label>
+    <input type="text" name="title" id="title" value="{{ selected_topic.title }}">
+    
+    <label for="description">설명:</label>
+    <textarea name="description" id="description">{{ selected_topic.description }}</textarea>
+    
+    <!-- 파일 첨부 -->
+    <label for="attached_file">파일 첨부:</label>
+    <input type="file" name="attached_file" id="attached_file" multiple>
+    
+    <!-- 기존에 첨부된 파일 목록 -->
+    <h3>첨부된 파일 리스트</h3>
+    <ul>
+        <!-- for file in selected_topic.attached_files.all 
+        <li>{{ file.name }} -->
+        {% for file in attached_files %}
+            <li>{{ file.file.name }}
+    
+
+            {% url 'delete_file' selected_topic.id file.id as delete_url %}
+            <button type="button" onclick="window.location.href='{{ delete_url }}'">삭제</button>
+            <!--button id="edit-topic-btn" onclick="showEditForm()" style="margin-left: 20px; vertical-align: middle;">[수정]</button-->
+            </li>
+
+        {% empty %}
+        <li>첨부된 파일이 없습니다.</li>
+        {% endfor %}
+    </ul>
+
+    <button type="submit">저장</button>
+</form>

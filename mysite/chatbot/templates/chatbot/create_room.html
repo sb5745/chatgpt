@@ -1,6 +1,9 @@
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
+    <!-- 주제 ID를 숨겨진 필드로 전달 -->
+    <input type="hidden" name="topic_id" value="{{ topic.id }}">
     {{ form.as_p }}  <!-- Django form 필드들을 출력 -->
+    <li><button onclick="window.location.href='/create_room/?topic_id={{ topic.id }}'">대화방 만들기</button></li>
     
     <!-- 파일 업로드 필드 -->
     <label for="attached_file">파일첨부:</label>
